@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient History: End of Lesson Chronicles</title>
+    <style>
+        /* Base World Environment */
+        body {
+            background-color: #d9c5a0;
+            background: radial-gradient(circle, #e6d5b8 0%, #c2ae87 100%);
+            margin: 0;
+            padding: 20px;
+            font-family: "Georgia", serif;
+            color: #2b1d0c;
+        }
+
+        /* The Scroll Container */
+        .scroll-container {
+            max-width: 650px;
+            margin: 40px auto;
+            position: relative;
+            background: #fffcf2;
+            border-left: 25px solid #e3cc9a;
+            border-right: 25px solid #e3cc9a;
+            border-top: 4px solid #b89047;
+            border-bottom: 4px solid #b89047;
+            border-radius: 4px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 0 0 4px #8b0000, 
+                0 15px 35px rgba(50, 35, 15, 0.4);
+        }
+
+        /* Scroll Roller Knobs (Decorative side curls) */
+        .scroll-container::before, .scroll-container::after {
+            content: "";
+            position: absolute;
+            left: -30px;
+            right: -30px;
+            height: 12px;
+            background: linear-gradient(90deg, #735925, #d4af37, #735925);
+            border: 1px solid #5c4033;
+            border-radius: 4px;
+        }
+        .scroll-container::before { top: -14px; }
+        .scroll-container::after { bottom: -14px; }
+
+        /* Graphics Layout Header */
+        .scroll-header {
+            text-align: center;
+            border-bottom: 3px double #8b0000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .graphic-banner {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 20px;
+            background: rgba(139, 0, 0, 0.03);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px dashed rgba(184, 144, 71, 0.4);
+        }
+
+        .graphic-banner svg {
+            transition: transform 0.3s ease;
+        }
+        .graphic-banner svg:hover {
+            transform: scale(1.1);
+        }
+
+        .scroll-header h1 {
+            color: #8b0000;
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 1px 1px 0px #fff;
+        }
+
+        .scroll-header p {
+            font-style: italic;
+            color: #5c4033;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* Form Layout as Ancient Stone Tablets */
+        .tablet-group {
+            background: rgba(184, 144, 71, 0.06);
+            border: 2px solid rgba(139, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(115, 89, 37, 0.05);
+            position: relative;
+        }
+
+        /* Graphic illustrations nested inside prompt areas */
+        .prompt-header-flex {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .prompt-header-flex svg {
+            flex-shrink: 0;
+        }
+
+        .tablet-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 16px;
+            color: #8b0000;
+            margin: 0;
+        }
+
+        .tablet-group .sub-label {
+            font-size: 13.5px;
+            color: #5c4033;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* Styled Labels for Reflection Sections */
+        .stone-heading {
+            display: inline-block;
+            color: #fffdf5;
+            padding: 3px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+        }
+        .heading-rose { background: #aa2222; }
+        .heading-bud { background: #227722; }
+        .heading-thorn { background: #b87333; }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #c2ae87;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: "Georgia", serif;
+            font-size: 15px;
+            background-color: #fffdfa;
+            color: #2b1d0c;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #8b0000;
+            background-color: #ffffff;
+            box-shadow: 0 0 8px rgba(139, 0, 0, 0.15);
+        }
+
+        textarea.form-input {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        /* Preference Choices */
+        .choice-stack {
+            margin-top: 5px;
+        }
+
+        .choice-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ebdcb9;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .choice-row:hover {
+            background: #fffdf5;
+            border-color: #b89047;
+        }
+
+        .choice-row input {
+            margin-right: 12px;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .choice-row label {
+            color: #2b1d0c;
+            font-size: 15px;
+            font-weight: normal;
+            margin: 0;
+            cursor: pointer;
+            display: inline;
+        }
+
+        /* The Golden Artifact Action Button */
+        .seal-button {
+            background: linear-gradient(180deg, #d4af37 0%, #a67c1e 100%);
+            color: #ffffff;
+            border: 2px solid #735925;
+            border-radius: 8px;
+            padding: 16px 24px;
+            font-family: "Georgia", serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            transition: all 0.15s ease;
+            margin-top: 10px;
+        }
+
+        .seal-button:hover {
+            background: linear-gradient(180deg, #e5c158 0%, #b89047 100%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(1px);
+        }
+
+        /* PRINT OVERRIDES: Outputs a clean document for teacher grading panels */
+        @media print {
+            body { background: #ffffff !important; color: #000000 !important; padding: 0; }
+            .scroll-container { border: none !important; max-width: 100% !important; padding: 0 !important; box-shadow: none !important; background: transparent !important; }
+            .scroll-container::before, .scroll-container::after, .graphic-banner, .sub-label, input[type="radio"], .choice-row input, .prompt-header-flex svg { display: none !important; }
+            .seal-button { display: none !important; }
+            .form-input { border: none !important; padding: 0 !important; background: transparent !important; height: auto !important; display: block !important; width: 100% !important; white-space: pre-wrap !important; color: #000000 !important; }
+            .tablet-group { margin-bottom: 25px; padding: 0; background: transparent !important; border: none !important; box-shadow: none !important; page-break-inside: avoid; }
+            .tablet-group label { font-size: 16px; border-bottom: 2px solid #8b0000; padding-bottom: 4px; margin-bottom: 8px; color: #8b0000; text-transform: uppercase; }
+            .stone-heading { color: #8b0000 !important; background: transparent !important; font-weight: bold; padding: 0; font-size: 14px; }
+            .choice-row { display: none !important; }
+            .choice-row.selected-print { display: block !important; background: #faf6eb !important; border-left: 5px solid #b89047 !important; padding: 12px !important; border-radius: 0 6px 6px 0; }
+            .choice-row.selected-print label { color: #000000 !important; font-weight: bold; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="scroll-container">
+    <div class="scroll-header">
+        <div class="graphic-banner">
+            <!-- Egypt: Giza Pyramids and Sphinx -->
+            <svg width="60" height="45" viewBox="0 0 64 48">
+                <polygon points="32,8 8,42 56,42" fill="#e5c158" stroke="#b89047" stroke-width="1.5"/>
+                <polygon points="32,8 56,42 42,42" fill="#cc9933"/>
+                <polygon points="16,22 2,42 30,42" fill="#d4af37"/>
+                <!-- Sphinx Outline Silhouette in foreground -->
+                <path d="M40,36 c2,0 3,-1 4,-3 c1,-2 0,-5 2,-5 c2,0 2,2 4,1 c1,-1 1,-3 3,-3 c2,0 3,3 3,5 l0,7 l-16,0 z" fill="#8c6d31"/>
+            </svg>
+            
+            <!-- Rome/Greece: Parthenon Pantheon Temple Front -->
+            <svg width="60" height="45" viewBox="0 0 64 48">
+                <polygon points="32,4 4,14 60,14" fill="#aa2222"/>
+                <rect x="6" y="14" width="52" height="3" fill="#d4af37"/>
+                <rect x="10" y="17" width="4" height="23" fill="#8b0000"/>
+                <rect x="22" y="17" width="4" height="23" fill="#8b0000"/>
+                <rect x="38" y="17" width="4" height="23" fill="#8b0000"/>
+                <rect x="50" y="17" width="4" height="23" fill="#8b0000"/>
+                <rect x="4" y="40" width="56" height="5" fill="#735925"/>
+            </svg>
+            
+            <!-- China: Great Wall Fortress Battlement -->
+            <svg width="60" height="45" viewBox="0 0 64 48">
+                <path d="M2,16 h6 v4 h6 v-4 h6 v4 h6 v-4 h6 v 4 h6 v-4 h6 v4 h6 v-4 h6 v10 h-60 z" fill="#8c6d31"/>
+                <rect x="2" y="26" width="60" height="18" fill="#735925"/>
+                <rect x="12" y="32" width="10" height="12" fill="#fffcf2" rx="2"/>
+                <rect x="42" y="32" width="10" height="12" fill="#fffcf2" rx="2"/>
+            </svg>
+        </div>
+        <h1>Lesson Exit Chronicle</h1>
+        <p>Record your thoughts to conclude today's historical journey.</p>
+    </div>
+
+    <form id="chronicleForm">
+        <!-- Identity -->
+        <div class="tablet-group">
+            <label for="studentName">Explorer Name *</label>
+            <input type="text" id="studentName" class="form-input" placeholder="Enter your full name" required>
+        </div>
+
+        <!-- Era -->
+        <div class="tablet-group">
+            <label for="classPeriod">Class Period / Block *</label>
+            <input type="text" id="classPeriod" class="form-input" placeholder="e.g., Period 2, Block A" required>
+        </div>
+
+        <!-- Rose Section -->
+        <div class="tablet-group">
+            <div class="prompt-header-flex">
+                <span class="stone-heading heading-rose">The Rose</span>
+                <!-- Custom Rose Illustration: Roman Laurel Wreath of Victory with a Golden Win Star -->
+                <svg width="36" height="36" viewBox="0 0 32 32">
+                    <path d="M6,16 C6,8 12,6 12,6 C12,6 8,12 10,18 C11,21 14,24 14,24 C14,24 8,22 6,16 Z" fill="#227722"/>
+                    <path d="M26,16 C26,8 20,6 20,6 C20,6 24,12 22,18 C21,21 18,24 18,24 C18,24 24,22 26,16 Z" fill="#227722"/>
+                    <polygon points="16,6 18,12 24,12 19,16 21,22 16,18 11,22 13,16 8,12 14,12" fill="#d4af37"/>
+                </svg>
+                <label for="roseInput">What went well during today's lesson? *</label>
+            </div>
+            <div class="sub-label">Share something cool you learned, a big idea you understood, or a win from class.</div>
+            <textarea id="roseInput" class="form-input" placeholder="What part of the lesson was a success?..." required></textarea>
+        </div>
+
+        <!-- Bud Section -->
+        <div class="tablet-group">
+            <div class="prompt-header-flex">
+                <span class="stone-heading heading-bud">The Bud</span>
+                <!-- Custom Bud Illustration: Egyptian Nile Lily / Lotus Sprouting from a Ceremonial Vase -->
+                <svg width="36" height="36" viewBox="0 0 32 32">
+                    <path d="M16,4 C12,12 10,16 10,16 C12,14 14,14 16,10 C18,14 20,14 22,16 C22,16 20,12 16,4 Z" fill="#22aA77"/>
+                    <path d="M16,4 C16,4 15,10 12,13 C9,16 7,16 7,16 C7,16 11,15 13,11 C15,8 16,4 16,4 Z" fill="#228b22"/>
+                    <path d="M16,4 C16,4 17,10 20,13 C23,16 25,16 25,16 C25,16 21,15 19,11 C17,8 16,4 16,4 Z" fill="#228b22"/>
+                    <path d="M11,18 L21,18 L19,28 L13,28 Z" fill="#b87333"/>
+                </svg>
+                <label for="budInput">What is an idea you want to explore further? *</label>
+            </div>
+            <div class="sub-label">What made you curious today? Mention something you want to learn more about next time.</div>
+            <textarea id="budInput" class="form-input" placeholder="What idea is starting to grow?..." required></textarea>
+        </div>
+
+        <!-- Thorn Section -->
+        <div class="tablet-group">
+            <div class="prompt-header-flex">
+                <span class="stone-heading heading-thorn">The Thorn</span>
+                <!-- Custom Thorn Illustration: Crossed Roman Gladius Battle Swords and a Iron Studded Shield -->
+                <svg width="36" height="36" viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="8" fill="#735925" stroke="#2b1d0c" stroke-width="1.5"/>
+                    <circle cx="16" cy="16" r="4" fill="#aaa"/>
+                    <!-- Sword 1 -->
+                    <rect x="2" y="14" width="28" height="3" fill="#ddd" transform="rotate(45 16 16)" stroke="#555" stroke-width="0.5"/>
+                    <rect x="26" y="13" width="4" height="5" fill="#735925" transform="rotate(45 16 16)"/>
+                    <!-- Sword 2 -->
+                    <rect x="2" y="14" width="28" height="3" fill="#ddd" transform="rotate(-45 16 16)" stroke="#555" stroke-width="0.5"/>
+                    <rect x="26" y="13" width="4" height="5" fill="#735925" transform="rotate(-45 16 16)"/>
+                </svg>
+                <label for="thornInput">What was confusing or challenging today? *</label>
+            </div>
+            <div class="sub-label">Was there a concept, timeline date, or activity that felt tricky or frustrating?</div>
+            <textarea id="thornInput" class="form-input" placeholder="What was your main obstacle or roadblock?..." required></textarea>
+        </div>
+
+        <!-- Simplified Support Choice Set -->
+        <div class="tablet-group">
+            <label>How should your teacher help you with your Thorn? *</label>
+            <div class="choice-stack">
+                <div class="choice-row">
+                    <input type="radio" id="prefYes" name="teacherPref" value="I would love to talk about this 1-on-1." required>
+                    <label for="prefYes">🙋‍♂️ I would love to talk about this 1-on-1.</label>
+                </div>
+                <div class="choice-row">
+                    <input type="radio" id="prefNo" name="teacherPref" value="No thank you, I just wanted to get it off my chest.">
+                    <label for="prefNo">✍️ No thanks, I just wanted to get it off my chest.</label>
+                </div>
+                <div class="choice-row">
+                    <input type="radio" id="prefLater" name="teacherPref" value="I am going to try solving it on my own first.">
+                    <label for="prefLater">🏹 I want to try solving it on my own first.</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Trigger -->
+        <button type="submit" class="seal-button">Submit & Print Report</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('chronicleForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const selectedChoice = document.querySelector('input[name="teacherPref"]:checked');
+        if (selectedChoice) {
+            selectedChoice.parentElement.classList.add('selected-print');
+        }
+
+        window.print();
+    });
+</script>
+
+</body>
+</html>
